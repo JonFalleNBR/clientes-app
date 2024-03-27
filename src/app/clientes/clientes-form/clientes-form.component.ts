@@ -11,6 +11,8 @@ import { response } from 'express';
 export class ClientesFormComponent implements OnInit{
 
     cliente: Cliente;
+    sucess: boolean = false;
+    errors: String[] = [];
 
   constructor(private service : ClientesService){
       this.cliente = new Cliente();
@@ -24,7 +26,12 @@ export class ClientesFormComponent implements OnInit{
       this.service
       .salvar(this.cliente)
       .subscribe(response => {
-        console.log(response);                      
+            this.sucess = true;
+            this.errors = []; 
+            this.cliente = response;                   
+          },   errorResponse => {
+            this.sucess = false;
+            this.errors = errorResponse.error.errors;    
           })
   }
 
