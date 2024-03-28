@@ -1,6 +1,6 @@
 <h1 class="mt-4">Clientes</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Cadastro</li>
+            <li class="breadcrumb-item active">{{cliente.id ? 'Edição' : 'Cadastro'}}</li>
         </ol>
 <!-- EventBinding OnSubmit esta no component cliente-form, assim como demais metodos -->
         <div class="container">
@@ -14,10 +14,9 @@
                        </div>
                        <div class="col-md-12">
                         <div class="alert alert-danger" role="alert" *ngFor="let erro of errors">
-                                {{erro}}
+                                {{ erro }}
                         </div>
                    </div>
-
                 </div>
 
                 <div class="row">
@@ -50,9 +49,14 @@
 
                 <div class="row">
                     <div class="col-md-3">
-                        <button type:submitt class="btn btn-success" >
+                        <button type:submitt class="btn btn-success" *ngIf="!cliente.id">
                                 <i class="fa fa-save"></i> Salvar
                         </button>
+
+                        <button type:submitt class="btn btn-primary" *ngIf="cliente.id">
+                            <i class="fa fa-sync-alt"></i> Atualizar
+                    </button>
+
                         <button type:button class="btn btn-danger ml-1" (click)="voltarParaListagem()">
                             <i class="fa fa-arrow-alt-circle-left"></i> Voltar
                     </button>
