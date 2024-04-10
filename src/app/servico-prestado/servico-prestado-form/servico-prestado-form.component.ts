@@ -3,7 +3,7 @@ import { Cliente } from '../../clientes/cliente';
 import { ClientesService } from '../../clientes.service';
 import { response } from 'express';
 import { ServicoPrestado } from '../servicoPrestado';
-
+import { ServicoPrestadoService } from '../../servico-prestado.service';
 
 
 @Component({
@@ -18,8 +18,10 @@ export class ServicoPrestadoFormComponent implements OnInit{
 
 
   constructor(
-    private clienteService : ClientesService
-  ){ this.servico = new ServicoPrestado(); }
+    private clienteService : ClientesService, private service: ServicoPrestadoService
+  ){ 
+    this.servico = new ServicoPrestado();
+   }
 
   ngOnInit(): void {
     this.clienteService
@@ -29,7 +31,15 @@ export class ServicoPrestadoFormComponent implements OnInit{
 
 
   onSubmit(){
-    console.log(this.servico)
+
+    this.servico.data = this.servico.data.trim();
+    this.servico.preco = this.servico.preco.trim(); //trim para evitar espaços em branco e dar um null
+
+    this.service
+        .salvar(this.servico)
+        .subscribe(response => {
+          console.log(response)
+        })
   }
 
 }
