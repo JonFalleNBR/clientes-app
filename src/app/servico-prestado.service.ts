@@ -22,11 +22,8 @@ export class ServicoPrestadoService {
 
     buscar(nome: string, mes: number): Observable<ServicoPrestadoBusca[]>{
 
-      const paramsText = `Nome: ${nome}, Mês: ${mes}`; // Constrói a string com os parâmetros
-      console.log(paramsText);
-
         const httpParams = new HttpParams().set("nome" , nome)
-                                           .set("mes", mes.toString());
+                                           .set("mes", mes ? mes.toString(): ' '); // caso ternario - passar a string mes, caso que ela n exista, passe uma string vazia
      
         const url = this.apiURL + "?" + httpParams.toString();
         return this.http.get<any>(url)
