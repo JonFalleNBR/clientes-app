@@ -11,8 +11,13 @@
                                 </h3>
                             </div>
                             <div class="card-body">
-                                <div class="alert alert-danger" *ngIf="loginError">
-                                    Login e/ou senha incorreto(a)
+
+                                <div class="alert alert-success" *ngIf="mensagemSuccess">
+                                    {{ mensagemSuccess }}
+                                </div>
+
+                                <div class="alert alert-danger" *ngFor="let erro of errors">
+                                    {{ erro }}
                                 </div>
                                 
                                 <form #loginForm="ngForm" (submit)="onSubmit()">
@@ -34,7 +39,9 @@
                                         <div class="form-group align-items-center justify-content-between mt-4 mb-0">
                                             <button type="submit" class="btn btn-primary" *ngIf="!cadastrando">Entrar</button>
 
-                                            <button type="button" class="btn btn-success" *ngIf="cadastrando">Cadastrar</button>
+                                            <button type="button" class="btn btn-success"
+                                            (click) = "cadastrar()"
+                                            *ngIf="cadastrando">Cadastrar</button>
 
                                             <button type="button" (click)="cancelaCadastro()"
                                                                 class="btn btn-danger ml-1" *ngIf="cadastrando">Cancelar</button>

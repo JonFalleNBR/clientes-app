@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from './usuario';
+import { AuthService } from '../auth.service';
+import { error } from 'console';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +13,14 @@ export class LoginComponent {
 
     username: string | null = null;
     password: string | null = null;
-    loginError: boolean = false;
     cadastrando: boolean = false;
+    mensagemSuccess: string | null = null;
+    errors: String[] = [];
+
 
     constructor(
-      private router: Router
+      private router: Router,
+      private authService: AuthService
     ){
         
     }
@@ -35,4 +41,19 @@ export class LoginComponent {
       this.cadastrando = false;
     }
 
+
+    cadastrar(){
+      const usuario: Usuario = new Usuario(); 
+      usuario.username = this.username;
+      usuario.password = this.password;
+      this.authService
+          .salvar(usuario)
+          .subscribe(response => {
+              this.mensagemSuccess = 'Cadastro Realizado com Sucesso! Efetue o Login';     
+          }, errorResponse => {  
+            this.mensagemSuccess = null;
+            this.errors = errorResponse.error.errors;
+          })
+    }
+//esse ultimo errors vem do Back end
 }
