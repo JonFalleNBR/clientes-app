@@ -1,66 +1,64 @@
-<div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-        <main>
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-5">
-                        <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-reader">
-                                <h3 class="text-center font-weight-light my-4">
-                                    {{ cadastrando ? ' Cadastro de um novo usuário ' : 'Entrar' }}
-                                </h3>
-                            </div>
-                            <div class="card-body">
-
-                                <div class="alert alert-success" *ngIf="mensagemSuccess">
-                                    {{ mensagemSuccess }}
+<div class="bg-primary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-5">
+                            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                <div class="card-reader">
+                                    <h3 class="text-center font-weight-light my-4">
+                                        {{ cadastrando ? ' Cadastro de um novo usuário ' : 'Entrar' }}
+                                    </h3>
                                 </div>
+                                <div class="card-body">
 
-                                <div class="alert alert-danger" *ngFor="let erro of errors">
-                                    {{ erro }}
-                                </div>
-                                
-                                <form #loginForm="ngForm" (submit)="onSubmit()">
+                                    <div class="alert alert-success" *ngIf="mensagemSuccess">
+                                        {{ mensagemSuccess }}
+                                    </div>
+
+                                    <div class="alert alert-danger" *ngFor="let erro of errors">
+                                        {{ erro }}
+                                    </div>
+
+                                    <form #loginForm="ngForm" (submit)="onSubmit()">
                                         <div class="form-group">
                                             <label class="small mb-1">Login</label>
-                                            <input type="text" name="username" 
-                                                        [(ngModel)]="username"
-                                                        class="form-control py-4"
-                                                        placeholder="Digite seu Login">
+                                            <input type="text" name="username" autocomplete="off" [(ngModel)]="username"
+                                                class="form-control py-4" placeholder="Digite seu Login">
                                         </div>
 
                                         <div class="form-group">
                                             <label class="small mb-1">Senha</label>
-                                            <input type="password" name="password" 
-                                                        [(ngModel)]="password"
-                                                        class="form-control py-4"
-                                                        placeholder="Digite sua senha" />
+                                            <input type="password" name="password" [(ngModel)]="password"
+                                                class="form-control py-4" placeholder="Digite sua senha" />
                                         </div>
                                         <div class="form-group align-items-center justify-content-between mt-4 mb-0">
-                                            <button type="submit" class="btn btn-primary" *ngIf="!cadastrando">Entrar</button>
+                                            <button type="submit" class="btn btn-primary"
+                                                *ngIf="!cadastrando">Entrar</button>
 
-                                            <button type="button" class="btn btn-success"
-                                            (click) = "cadastrar()"
-                                            *ngIf="cadastrando">Cadastrar</button>
+                                            <button type="button" class="btn btn-success" (click)="cadastrar()"
+                                                *ngIf="cadastrando">Cadastrar</button>
 
                                             <button type="button" (click)="cancelaCadastro()"
-                                                                class="btn btn-danger ml-1" *ngIf="cadastrando">Cancelar</button>
+                                                class="btn btn-danger ml-1" *ngIf="cadastrando">Cancelar</button>
                                         </div>
-                                </form>
-                            </div>
-
-                            <div class="card-footer text-center" >
-                                <div class="small">
-                                    <a href="#" (click)="preparaCadastrar($event)">
-                                        Não possui usuário ? Cadastre-se!
-                                    </a>
+                                    </form>
                                 </div>
-                            </div>
 
+                                <div class="card-footer text-center">
+                                    <div class="small">
+                                        <a href="#" (click)="preparaCadastrar($event)">
+                                            Não possui usuário ? Cadastre-se!
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 </div>
