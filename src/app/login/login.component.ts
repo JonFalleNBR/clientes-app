@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Usuario } from './usuario';
 import { AuthService } from '../auth.service';
 import { error } from 'console';
+import { response } from 'express';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,8 @@ import { error } from 'console';
 })
 export class LoginComponent {
 
-    username: string | null = null;
-    password: string | null = null;
+    username: string = ''
+    password: string  = ''
     cadastrando: boolean = false;
     mensagemSuccess: string | null = null;
     errors: String[] = [];
@@ -26,10 +27,18 @@ export class LoginComponent {
     }
 
     onSubmit(){
-      //this.username = this.username.trim();
-      console.log(`User: ${this.username}, Pass: ${this.password}`)
-
-      this.router.navigate(['/home'])
+      console.log('Tentando logar com username:', this.username, 'e password:', this.password);
+    
+      this.authService
+            .tentarLogar(this.username, this.password)
+            
+            .subscribe(response => {
+                const access_token = JSON.stringify(response); // transforma o objeto JSON que contem o token em uma string
+                localStorage.setItem('access_token',access_token) // armazenar o token no localstorage la do browser
+              this.router.navigate(['/home'])
+            }, errorResponse => {
+               this.errors = ['Usuario e/ou senha incorretos']
+            })
     }
  
     preparaCadastrar(event: { preventDefault: () => void; }){

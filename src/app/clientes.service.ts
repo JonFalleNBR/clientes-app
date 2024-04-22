@@ -14,7 +14,12 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
 
   salvar(cliente: Cliente): Observable<Cliente> {
-    return this.http.post<Cliente>(`${this.apiURL}`, cliente)
+    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+    const headers = {
+      'Authorization' : 'Bearer ' + token.access_token
+    }
+
+    return this.http.post<Cliente>(`${this.apiURL}`, cliente, {headers})
   }
 
   atualizar(cliente: Cliente): Observable<any> { // Any pois o Back-end é um metodo VOID que não retorna nada
@@ -27,7 +32,13 @@ export class ClientesService {
 
 
   getClientes(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(this.apiURL)
+        //const tokenString = localStorage.getItem('access_token')
+        const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+        const headers = {
+          'Authorization' : 'Bearer ' + token.access_token
+        }
+
+    return this.http.get<Cliente[]>(this.apiURL, {headers})
   }
 
   getClientebyId(id: number): Observable<Cliente> {
