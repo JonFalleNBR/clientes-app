@@ -16,17 +16,28 @@ export class ServicoPrestadoService {
   constructor(private http : HttpClient) {}
 
     salvar(servicoPrestado: ServicoPrestado) : Observable<ServicoPrestado>{
-      return this.http.post<ServicoPrestado>(`${this.apiURL}`, servicoPrestado);
+      const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+      const headers = {
+        'Authorization' : 'Bearer ' + token.access_token
+      }
+
+      return this.http.post<ServicoPrestado>(`${this.apiURL}`, servicoPrestado, {headers});
     }
   
+// --------------------------------------------------------------------------------
+
 
     buscar(nome: string, mes: number): Observable<ServicoPrestadoBusca[]>{
+      const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+      const headers = {
+        'Authorization' : 'Bearer ' + token.access_token
+      }
 
         const httpParams = new HttpParams().set("nome" , nome)
                                            .set("mes", mes ? mes.toString(): ' '); // caso ternario - passar a string mes, caso que ela n exista, passe uma string vazia
      
         const url = this.apiURL + "?" + httpParams.toString();
-        return this.http.get<any>(url)
+        return this.http.get<any>(url, {headers})
 
     }
 }

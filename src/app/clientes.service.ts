@@ -23,11 +23,23 @@ export class ClientesService {
   }
 
   atualizar(cliente: Cliente): Observable<any> { // Any pois o Back-end é um metodo VOID que não retorna nada
-    return this.http.put<Cliente>(`${this.apiURL}/${cliente.id}`, cliente)
+    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+    const headers = {
+      'Authorization' : 'Bearer ' + token.access_token
+    }
+
+
+    return this.http.put<Cliente>(`${this.apiURL}/${cliente.id}`, cliente, {headers})
   }
 
   deletar(cliente: Cliente): Observable<any>{
-    return this.http.delete<any>(`${this.apiURL}/${cliente.id}`)
+
+    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+    const headers = {
+      'Authorization' : 'Bearer ' + token.access_token
+    }
+
+    return this.http.delete<any>(`${this.apiURL}/${cliente.id}`, {headers})
   }
 
 
@@ -42,7 +54,11 @@ export class ClientesService {
   }
 
   getClientebyId(id: number): Observable<Cliente> {
-    return this.http.get<Cliente>(`${this.apiURL}/${id}`) //uso da crase no lugar da aspas simples possibilita trasnformar o link em uma string, e habilitando a inserção de expressões 
+    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
+        const headers = {
+          'Authorization' : 'Bearer ' + token.access_token
+        }
+    return this.http.get<Cliente>(`${this.apiURL}/${id}`, {headers}) //uso da crase no lugar da aspas simples possibilita trasnformar o link em uma string, e habilitando a inserção de expressões 
   }
 
 }
