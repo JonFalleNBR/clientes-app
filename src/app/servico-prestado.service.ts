@@ -16,18 +16,32 @@ export class ServicoPrestadoService {
   constructor(private http : HttpClient) {}
 
     salvar(servicoPrestado: ServicoPrestado) : Observable<ServicoPrestado>{
-      const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-      const headers = {
-        'Authorization' : 'Bearer ' + token.access_token
-      }
+      
 
-      return this.http.post<ServicoPrestado>(`${this.apiURL}`, servicoPrestado, {headers});
+      return this.http.post<ServicoPrestado>(`${this.apiURL}`, servicoPrestado);
     }
   
 // --------------------------------------------------------------------------------
 
 
     buscar(nome: string, mes: number): Observable<ServicoPrestadoBusca[]>{
+     
+
+        const httpParams = new HttpParams().set("nome" , nome)
+                                           .set("mes", mes ? mes.toString(): ' '); // caso ternario - passar a string mes, caso que ela n exista, passe uma string vazia
+     
+        const url = this.apiURL + "?" + httpParams.toString();
+        return this.http.get<any>(url)
+    }
+}
+
+//Conexão com a API Back End, parte importante da aplicação que fala com o Back, que esta conectado ao Banco de Dados
+
+/*
+Estrutura de codigo com a captura do Token Bearer direto nos metodos , essa estrutura foi alterada para o padrão do Interceptor que ja envia auatenticação token direto para o header da api
+contemplando todas as paginas 
+
+buscar(nome: string, mes: number): Observable<ServicoPrestadoBusca[]>{
       const token = JSON.parse(localStorage.getItem('access_token') || '{}')
       const headers = {
         'Authorization' : 'Bearer ' + token.access_token
@@ -40,6 +54,4 @@ export class ServicoPrestadoService {
         return this.http.get<any>(url, {headers})
 
     }
-}
-
-//Conexão com a API Back End, parte importante da aplicação que fala com o Back, que esta conectado ao Banco de Dados
+*/

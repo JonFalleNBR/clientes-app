@@ -14,51 +14,25 @@ export class ClientesService {
   constructor(private http: HttpClient) { }
 
   salvar(cliente: Cliente): Observable<Cliente> {
-    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-    const headers = {
-      'Authorization' : 'Bearer ' + token.access_token
-    }
-
-    return this.http.post<Cliente>(`${this.apiURL}`, cliente, {headers})
+    return this.http.post<Cliente>(`${this.apiURL}`, cliente)
   }
 
   atualizar(cliente: Cliente): Observable<any> { // Any pois o Back-end é um metodo VOID que não retorna nada
-    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-    const headers = {
-      'Authorization' : 'Bearer ' + token.access_token
-    }
-
-
-    return this.http.put<Cliente>(`${this.apiURL}/${cliente.id}`, cliente, {headers})
+  
+    return this.http.put<Cliente>(`${this.apiURL}/${cliente.id}`, cliente)
   }
 
   deletar(cliente: Cliente): Observable<any>{
-
-    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-    const headers = {
-      'Authorization' : 'Bearer ' + token.access_token
-    }
-
-    return this.http.delete<any>(`${this.apiURL}/${cliente.id}`, {headers})
+    return this.http.delete<any>(`${this.apiURL}/${cliente.id}`)
   }
 
 
   getClientes(): Observable<Cliente[]> {
-        //const tokenString = localStorage.getItem('access_token')
-        const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-        const headers = {
-          'Authorization' : 'Bearer ' + token.access_token
-        }
-
-    return this.http.get<Cliente[]>(this.apiURL, {headers})
+    return this.http.get<Cliente[]>(this.apiURL)
   }
 
   getClientebyId(id: number): Observable<Cliente> {
-    const token = JSON.parse(localStorage.getItem('access_token') || '{}')
-        const headers = {
-          'Authorization' : 'Bearer ' + token.access_token
-        }
-    return this.http.get<Cliente>(`${this.apiURL}/${id}`, {headers}) //uso da crase no lugar da aspas simples possibilita trasnformar o link em uma string, e habilitando a inserção de expressões 
+    return this.http.get<Cliente>(`${this.apiURL}/${id}`) //uso da crase no lugar da aspas simples possibilita trasnformar o link em uma string, e habilitando a inserção de expressões 
   }
 
 }
