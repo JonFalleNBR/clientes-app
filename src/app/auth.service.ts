@@ -20,10 +20,15 @@ export class AuthService {
     private http : HttpClient
   ) { }
 
+
   salvar(usuario: Usuario): Observable<any>{
     return this.http.post<Usuario>(`${this.apiUrl}`, usuario)
   }
 
+  
+  isAuthenticated() : boolean {
+    return true;
+  }
 
   tentarLogar(username: string, password: string): Observable<any>{
         const params = new HttpParams()
@@ -37,5 +42,6 @@ export class AuthService {
           }
         return this.http.post(this.tokenUrl, params.toString(), { headers });
   }
+
 
 }
