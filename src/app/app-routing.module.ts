@@ -8,8 +8,9 @@ import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '' , component: LayoutComponent, children:[
-    {path: 'home' , component: HomeComponent, canActivate : [AuthGuard]} // a rota para acessar a aplicação só sera permitida se o usuario estiver autenticado, de acordo com a regra configrada na classe auth.guard
-  ]}
+  {path: 'home' , component: HomeComponent, canActivate : [AuthGuard]},  // a rota para acessar a aplicação só sera permitida se o usuario estiver autenticado, de acordo com a regra configrada na classe auth.guard
+  {path: '' , redirectTo: '/home', pathMatch: 'full'}
+]}
 ];
 
 @NgModule({

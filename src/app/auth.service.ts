@@ -32,6 +32,10 @@ export class AuthService {
     return null;
   }
 
+
+
+
+
   salvar(usuario: Usuario): Observable<any>{
     return this.http.post<Usuario>(`${this.apiUrl}`, usuario)
   }
